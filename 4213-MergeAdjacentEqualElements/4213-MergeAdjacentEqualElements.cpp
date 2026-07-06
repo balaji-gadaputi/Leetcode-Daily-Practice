@@ -1,0 +1,16 @@
+// Last updated: 06/07/2026, 11:58:16
+class Solution {
+public:
+    vector<long long> mergeAdjacent(vector<int>& nums) {
+        vector<long long> st;
+        for(auto x:nums){
+            long long cur = x;
+            while(!st.empty() && st.back()==cur){
+                cur += st.back();
+                st.pop_back();
+            }
+            st.push_back(cur);
+        }
+        return st;
+    }
+};
