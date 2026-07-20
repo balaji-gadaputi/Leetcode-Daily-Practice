@@ -1,4 +1,4 @@
-// Last updated: 16/07/2026, 14:32:55
+// Last updated: 20/07/2026, 10:50:39
 1/**
 2 * Definition for a binary tree node.
 3 * struct TreeNode {
@@ -14,14 +14,17 @@
 13public:
 14    bool isValidBST(TreeNode* root) {
 15        if(root == nullptr) return true;
-16        stack<TreeNode*> st; long long prev = LLONG_MIN;
-17        while( !st.empty() || root != nullptr){
-18            while(root != nullptr){ st.push(root); root = root->left; }
-19            root = st.top(); st.pop();
-20            if(root->val <= prev) return false;
-21            prev = root->val;
-22            root = root->right;
-23        }
-24        return true;
-25    }
-26};
+16        TreeNode* cur = root; long long prev=LLONG_MIN;
+17        stack<TreeNode*> st;
+18        while(cur!=nullptr || !st.empty()){
+19            while(cur!=nullptr){
+20                st.push(cur); cur = cur->left;
+21            }
+22            cur = st.top(); st.pop();
+23            if(cur->val <= prev) return false;
+24            prev = cur->val;
+25            cur = cur->right;
+26        }
+27        return true;
+28    }
+29};
