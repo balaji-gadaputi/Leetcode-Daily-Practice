@@ -1,4 +1,4 @@
-// Last updated: 16/07/2026, 13:08:52
+// Last updated: 20/07/2026, 10:26:41
 1/**
 2 * Definition for a binary tree node.
 3 * struct TreeNode {
@@ -7,58 +7,34 @@
 6 *     TreeNode *right;
 7 *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
 8 *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-9 *     TreeNode(int x, TreeNode *left, TreeNode *right)
-10 *         : val(x), left(left), right(right) {}
-11 * };
-12 */
-13class Solution {
-14public:
-15    // Finds the leftmost (minimum) node in a subtree
-16    TreeNode* findMin(TreeNode* root) {
-17        while (root->left != nullptr) {
-18            root = root->left;
-19        }
-20        return root;
-21    }
-22
-23    TreeNode* deleteNode(TreeNode* root, int key) {
-24        if (root == nullptr)
-25            return nullptr;
-26
-27        // Search for the node
-28        if (key < root->val) {
-29            root->left = deleteNode(root->left, key);
-30        }
-31        else if (key > root->val) {
-32            root->right = deleteNode(root->right, key);
-33        }
-34        else {
-35            // Node found
-36
-37            // Case 1: No left child
-38            if (root->left == nullptr) {
-39                TreeNode* temp = root->right;
-40                delete root;
-41                return temp;
-42            }
-43
-44            // Case 2: No right child
-45            if (root->right == nullptr) {
-46                TreeNode* temp = root->left;
-47                delete root;
-48                return temp;
-49            }
-50
-51            // Case 3: Two children
-52            TreeNode* successor = findMin(root->right);
-53
-54            // Copy successor's value
-55            root->val = successor->val;
-56
-57            // Delete the successor
-58            root->right = deleteNode(root->right, successor->val);
-59        }
-60
-61        return root;
-62    }
-63};
+9 *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+10 * };
+11 */
+12class Solution {
+13public:
+14    TreeNode* findMin(TreeNode* root){
+15        while(root->left!=nullptr){
+16            root = root->left;
+17        }
+18        return root;
+19    }
+20    TreeNode* deleteNode(TreeNode* root, int key) {
+21        if(root == nullptr) return root;
+22        if(root->val > key) root->left = deleteNode(root->left,key);
+23        else if(root->val < key) root->right = deleteNode(root->right,key);
+24        else{
+25            if(root->left == nullptr){
+26                TreeNode* temp = root->right;
+27                delete root; return temp;
+28            }
+29            if(root->right == nullptr){
+30                TreeNode* temp = root->left;
+31                delete root; return temp;
+32            }
+33            TreeNode* successor_val = findMin(root->right);
+34            root->val = successor_val->val;
+35            root->right = deleteNode(root->right, successor_val->val);
+36        }
+37        return root;
+38    }
+39};
