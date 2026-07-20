@@ -1,4 +1,4 @@
-// Last updated: 16/07/2026, 14:36:04
+// Last updated: 20/07/2026, 10:56:47
 1/**
 2 * Definition for a binary tree node.
 3 * struct TreeNode {
@@ -13,14 +13,16 @@
 12class Solution {
 13public:
 14    int kthSmallest(TreeNode* root, int k) {
-15        if(root == nullptr) return true; int count = 0;
-16        stack<TreeNode*> st; long long prev = LLONG_MIN;
-17        while( !st.empty() || root != nullptr){
-18            while(root != nullptr){ st.push(root); root = root->left; }
-19            root = st.top(); st.pop(); count++; 
-20            if(count == k) return root->val;
-21            root = root->right;
-22        }
-23        return -1;
-24    }
-25};
+15        if(root == nullptr) return 0; int count=0;
+16        TreeNode* cur = root; stack<TreeNode*> st;
+17        while(cur!=nullptr || !st.empty()){
+18            while(cur!=nullptr){
+19                st.push(cur); cur = cur->left;
+20            }
+21            cur = st.top(); st.pop();
+22            count++; if(count == k) return cur->val;
+23            cur = cur->right;
+24        }
+25        return 0;
+26    }
+27};
